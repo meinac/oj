@@ -1164,6 +1164,7 @@ extern void oj_set_parser_validator(ojParser p);
 extern void oj_set_parser_saj(ojParser p);
 extern void oj_set_parser_usual(ojParser p);
 extern void oj_set_parser_debug(ojParser p);
+extern VALUE oj_get_parser_introspect();
 
 static int opt_cb(VALUE rkey, VALUE value, VALUE ptr) {
     ojParser    p   = (ojParser)ptr;
@@ -1553,6 +1554,10 @@ static VALUE parser_validate(VALUE self) {
     return validate_parser;
 }
 
+static VALUE parser_introspect(VALUE self) {
+    return oj_get_parser_introspect();
+}
+
 /* Document-class: Oj::Parser
  *
  * A reusable parser that makes use of named delegates to determine the
@@ -1578,6 +1583,7 @@ void oj_parser_init(void) {
     rb_define_method(parser_class, "method_missing", parser_missing, -1);
 
     rb_define_module_function(parser_class, "usual", parser_usual, 0);
+    rb_define_module_function(parser_class, "introspect", parser_introspect, 0);
     rb_define_module_function(parser_class, "saj", parser_saj, 0);
     rb_define_module_function(parser_class, "validate", parser_validate, 0);
 }
